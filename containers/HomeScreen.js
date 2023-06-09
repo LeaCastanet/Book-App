@@ -13,6 +13,9 @@ import {
 import { useNavigation } from "@react-navigation/core";
 import { ActivityIndicator } from "react-native";
 
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+
 export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
   const navigation = useNavigation();
 
@@ -49,56 +52,122 @@ export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
         />
         <View>
           {data.map((book) => {
-            return (
-              <View>
-                <View>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("Book", { id: book.id })}
-                  >
-                    <Image
-                      source={{
-                        uri: book.volumeInfo.imageLinks.smallThumbnail,
-                      }}
-                      style={styles.img}
-                    />
-                    <Text key={book.id}>{book.volumeInfo.title}</Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => {
-                      console.log("pressed !");
-                    }}
-                  >
-                    <Text style={styles.btnText}>Favorite</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => {
-                      let isPresent = false;
-                      for (let i = 0; i < newFavoris.length; i++) {
-                        if (newFavoris[i].id === book.id) {
-                          isPresent = true;
+            if (book.volumeInfo.authors) {
+              return (
+                <View key={book.id}>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Book", { id: book.id })
+                      }
+                    >
+                      <Image
+                        source={{
+                          uri: book.volumeInfo.imageLinks.smallThumbnail,
+                        }}
+                        style={styles.img}
+                      />
+                      <Text>{book.volumeInfo.title}</Text>
+                      <Text>
+                        Author(s): {book.volumeInfo.authors.join(", ")}
+                      </Text>
+                      <Text>
+                        Release: {book.volumeInfo.publishedDate.substr(0, 4)}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        let isPresent = false;
+                        for (let i = 0; i < newFavoris.length; i++) {
+                          if (newFavoris[i].id === book.id) {
+                            isPresent = true;
+                          }
                         }
-                      }
-                      if (isPresent === true) {
-                        setFavoris(favoris.filter((id) => id.id !== book.id));
-                      } else {
-                        newFavoris.push({
-                          //img: `${character.thumbnail.path}.${character.thumbnail.extension}`,
-                          title: book.volumeInfo.title,
-                          id: book.id,
-                        });
-                        setFavoris(newFavoris);
-                      }
-                    }}
-                  >
-                    <Text style={styles.btnText}>Reading List</Text>
-                  </TouchableOpacity>
+                        if (isPresent === true) {
+                          setFavoris(favoris.filter((id) => id.id !== book.id));
+                        } else {
+                          newFavoris.push({
+                            //img: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+                            title: book.volumeInfo.title,
+                            id: book.id,
+                          });
+                          setFavoris(newFavoris);
+                        }
+                      }}
+                    >
+                      <AntDesign name="heart" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        console.log("pressed !");
+                      }}
+                    >
+                      <FontAwesome5 name="book" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            );
+              );
+            } else {
+              return (
+                <View key={book.id}>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Book", { id: book.id })
+                      }
+                    >
+                      <Image
+                        source={{
+                          uri: book.volumeInfo.imageLinks.smallThumbnail,
+                        }}
+                        style={styles.img}
+                      />
+                      <Text>{book.volumeInfo.title}</Text>
+                      <Text>
+                        Release: {book.volumeInfo.publishedDate.substr(0, 4)}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        let isPresent = false;
+                        for (let i = 0; i < newFavoris.length; i++) {
+                          if (newFavoris[i].id === book.id) {
+                            isPresent = true;
+                          }
+                        }
+                        if (isPresent === true) {
+                          setFavoris(favoris.filter((id) => id.id !== book.id));
+                        } else {
+                          newFavoris.push({
+                            //img: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+                            title: book.volumeInfo.title,
+                            id: book.id,
+                          });
+                          setFavoris(newFavoris);
+                        }
+                      }}
+                    >
+                      <AntDesign name="heart" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        console.log("pressed !");
+                      }}
+                    >
+                      <FontAwesome5 name="book" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            }
           })}
         </View>
       </ScrollView>
