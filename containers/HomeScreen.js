@@ -16,7 +16,14 @@ import { ActivityIndicator } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
+export default function HomeScreen({
+  favoris,
+  setFavoris,
+  newFavoris,
+  readingList,
+  setReadingList,
+  newReadingList,
+}) {
   const navigation = useNavigation();
 
   const [search, setSearch] = useState("Search Here");
@@ -90,7 +97,7 @@ export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
                           setFavoris(favoris.filter((id) => id.id !== book.id));
                         } else {
                           newFavoris.push({
-                            //img: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+                            img: book.volumeInfo.imageLinks.smallThumbnail,
                             title: book.volumeInfo.title,
                             id: book.id,
                           });
@@ -98,15 +105,40 @@ export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
                         }
                       }}
                     >
-                      <AntDesign name="heart" />
+                      {favoris.find((id) => id.id === book.id) ? (
+                        <AntDesign name="heart" size={24} color="black" />
+                      ) : (
+                        <AntDesign name="hearto" size={24} color="black" />
+                      )}
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.btn}
                       onPress={() => {
-                        console.log("pressed !");
+                        let isPresent = false;
+                        for (let i = 0; i < newReadingList.length; i++) {
+                          if (newReadingList[i].id === book.id) {
+                            isPresent = true;
+                          }
+                        }
+                        if (isPresent === true) {
+                          setReadingList(
+                            readingList.filter((id) => id.id !== book.id)
+                          );
+                        } else {
+                          newReadingList.push({
+                            img: book.volumeInfo.imageLinks.smallThumbnail,
+                            title: book.volumeInfo.title,
+                            id: book.id,
+                          });
+                          setReadingList(newReadingList);
+                        }
                       }}
                     >
-                      <FontAwesome5 name="book" />
+                      {readingList.find((id) => id.id === book.id) ? (
+                        <FontAwesome5 name="book" color="red" />
+                      ) : (
+                        <FontAwesome5 name="book" />
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -146,7 +178,7 @@ export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
                           setFavoris(favoris.filter((id) => id.id !== book.id));
                         } else {
                           newFavoris.push({
-                            //img: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+                            img: book.volumeInfo.imageLinks.smallThumbnail,
                             title: book.volumeInfo.title,
                             id: book.id,
                           });
@@ -154,15 +186,40 @@ export default function HomeScreen({ favoris, setFavoris, newFavoris }) {
                         }
                       }}
                     >
-                      <AntDesign name="heart" />
+                      {favoris.find((id) => id.id === book.id) ? (
+                        <AntDesign name="heart" size={24} color="black" />
+                      ) : (
+                        <AntDesign name="hearto" size={24} color="black" />
+                      )}
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.btn}
                       onPress={() => {
-                        console.log("pressed !");
+                        let isPresent = false;
+                        for (let i = 0; i < newReadingList.length; i++) {
+                          if (newReadingList[i].id === book.id) {
+                            isPresent = true;
+                          }
+                        }
+                        if (isPresent === true) {
+                          setReadingList(
+                            readingList.filter((id) => id.id !== book.id)
+                          );
+                        } else {
+                          newReadingList.push({
+                            img: book.volumeInfo.imageLinks.smallThumbnail,
+                            title: book.volumeInfo.title,
+                            id: book.id,
+                          });
+                          setReadingList(newReadingList);
+                        }
                       }}
                     >
-                      <FontAwesome5 name="book" />
+                      {readingList.find((id) => id.id === book.id) ? (
+                        <FontAwesome5 name="book" color="red" />
+                      ) : (
+                        <FontAwesome5 name="book" />
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -184,7 +241,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   img: {
-    height: 50,
+    height: 80,
     width: 50,
   },
 });

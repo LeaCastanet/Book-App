@@ -21,6 +21,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [favoris, setFavoris] = useState([]);
   const newFavoris = [...favoris];
+
+  const [readingList, setReadingList] = useState([]);
+  const newReadingList = [...readingList];
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -56,6 +59,9 @@ export default function App() {
                           favoris={favoris}
                           setFavoris={setFavoris}
                           newFavoris={newFavoris}
+                          readingList={readingList}
+                          setReadingList={setReadingList}
+                          newReadingList={newReadingList}
                         />
                       )}
                     </Stack.Screen>
@@ -127,7 +133,13 @@ export default function App() {
                       // header: (props) => <CustomHeader {...props} />,
                       // }}
                     >
-                      {() => <ReadingListScreen />}
+                      {() => (
+                        <ReadingListScreen
+                          readingList={readingList}
+                          setReadingList={setReadingList}
+                          newReadingList={newReadingList}
+                        />
+                      )}
                     </Stack.Screen>
                     <Stack.Screen
                       name="Book"
