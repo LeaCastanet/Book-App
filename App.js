@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -18,6 +19,8 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [favoris, setFavoris] = useState([]);
+  const newFavoris = [...favoris];
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -48,7 +51,13 @@ export default function App() {
                       // header: (props) => <CustomHeader {...props} />,
                       // }}
                     >
-                      {() => <HomeScreen />}
+                      {() => (
+                        <HomeScreen
+                          favoris={favoris}
+                          setFavoris={setFavoris}
+                          newFavoris={newFavoris}
+                        />
+                      )}
                     </Stack.Screen>
                     <Stack.Screen
                       name="Book"
@@ -80,7 +89,13 @@ export default function App() {
                       // header: (props) => <CustomHeader {...props} />,
                       // }}
                     >
-                      {() => <FavoriteScreen />}
+                      {() => (
+                        <FavoriteScreen
+                          favoris={favoris}
+                          setFavoris={setFavoris}
+                          newFavoris={newFavoris}
+                        />
+                      )}
                     </Stack.Screen>
                     <Stack.Screen
                       name="Book"
