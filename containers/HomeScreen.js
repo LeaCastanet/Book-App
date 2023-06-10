@@ -26,14 +26,14 @@ export default function HomeScreen({
 }) {
   const navigation = useNavigation();
 
-  const [search, setSearch] = useState("Search Here");
+  const [search, setSearch] = useState("Search here");
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${search}`
+        `https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=40`
       );
       setData(response.data.items);
       setIsLoading(false);
@@ -51,6 +51,9 @@ export default function HomeScreen({
   ) : (
     <SafeAreaView>
       <ScrollView>
+        <View>
+          <Text>Search</Text>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={setSearch}
@@ -60,170 +63,335 @@ export default function HomeScreen({
         <View>
           {data.map((book) => {
             if (book.volumeInfo.authors) {
-              return (
-                <View key={book.id}>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("Book", { id: book.id })
-                      }
-                    >
-                      <Image
-                        source={{
-                          uri: book.volumeInfo.imageLinks.smallThumbnail,
+              if (book.volumeInfo.imageLinks) {
+                return (
+                  <View key={book.id}>
+                    <View>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("Book", { id: book.id })
+                        }
+                      >
+                        <Image
+                          source={{
+                            uri: book.volumeInfo.imageLinks.smallThumbnail,
+                          }}
+                          style={styles.img}
+                        ></Image>
+                        <Text>{book.volumeInfo.title}</Text>
+                        <Text>
+                          Author(s): {book.volumeInfo.authors.join(", ")}
+                        </Text>
+                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newFavoris.length; i++) {
+                            if (newFavoris[i].id === book.id) {
+                              isPresent = true;
+                            }
+                          }
+                          if (isPresent === true) {
+                            setFavoris(
+                              favoris.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newFavoris.push({
+                              img: book.volumeInfo.imageLinks.smallThumbnail,
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setFavoris(newFavoris);
+                          }
                         }}
-                        style={styles.img}
-                      />
-                      <Text>{book.volumeInfo.title}</Text>
-                      <Text>
-                        Author(s): {book.volumeInfo.authors.join(", ")}
-                      </Text>
-                      <Text>
-                        Release: {book.volumeInfo.publishedDate.substr(0, 4)}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View>
-                    <TouchableOpacity
-                      style={styles.btn}
-                      onPress={() => {
-                        let isPresent = false;
-                        for (let i = 0; i < newFavoris.length; i++) {
-                          if (newFavoris[i].id === book.id) {
-                            isPresent = true;
+                      >
+                        {favoris.find((id) => id.id === book.id) ? (
+                          <AntDesign name="heart" size={24} color="black" />
+                        ) : (
+                          <AntDesign name="hearto" size={24} color="black" />
+                        )}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newReadingList.length; i++) {
+                            if (newReadingList[i].id === book.id) {
+                              isPresent = true;
+                            }
                           }
-                        }
-                        if (isPresent === true) {
-                          setFavoris(favoris.filter((id) => id.id !== book.id));
-                        } else {
-                          newFavoris.push({
-                            img: book.volumeInfo.imageLinks.smallThumbnail,
-                            title: book.volumeInfo.title,
-                            id: book.id,
-                          });
-                          setFavoris(newFavoris);
-                        }
-                      }}
-                    >
-                      {favoris.find((id) => id.id === book.id) ? (
-                        <AntDesign name="heart" size={24} color="black" />
-                      ) : (
-                        <AntDesign name="hearto" size={24} color="black" />
-                      )}
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.btn}
-                      onPress={() => {
-                        let isPresent = false;
-                        for (let i = 0; i < newReadingList.length; i++) {
-                          if (newReadingList[i].id === book.id) {
-                            isPresent = true;
+                          if (isPresent === true) {
+                            setReadingList(
+                              readingList.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newReadingList.push({
+                              img: book.volumeInfo.imageLinks.smallThumbnail,
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setReadingList(newReadingList);
                           }
-                        }
-                        if (isPresent === true) {
-                          setReadingList(
-                            readingList.filter((id) => id.id !== book.id)
-                          );
-                        } else {
-                          newReadingList.push({
-                            img: book.volumeInfo.imageLinks.smallThumbnail,
-                            title: book.volumeInfo.title,
-                            id: book.id,
-                          });
-                          setReadingList(newReadingList);
-                        }
-                      }}
-                    >
-                      {readingList.find((id) => id.id === book.id) ? (
-                        <FontAwesome5 name="book" color="red" />
-                      ) : (
-                        <FontAwesome5 name="book" />
-                      )}
-                    </TouchableOpacity>
+                        }}
+                      >
+                        {readingList.find((id) => id.id === book.id) ? (
+                          <FontAwesome5 name="book" color="red" />
+                        ) : (
+                          <FontAwesome5 name="book" />
+                        )}
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
+                );
+              } else {
+                return (
+                  <View key={book.id}>
+                    <View>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("Book", { id: book.id })
+                        }
+                      >
+                        <Image
+                          source={require("../assets/coverNotAvailable.jpg")}
+                          style={styles.img}
+                        />
+                        <Text>{book.volumeInfo.title}</Text>
+                        <Text>
+                          Author(s): {book.volumeInfo.authors.join(", ")}
+                        </Text>
+                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newFavoris.length; i++) {
+                            if (newFavoris[i].id === book.id) {
+                              isPresent = true;
+                            }
+                          }
+                          if (isPresent === true) {
+                            setFavoris(
+                              favoris.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newFavoris.push({
+                              img: "../assets/coverNotAvailable.jpg",
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setFavoris(newFavoris);
+                          }
+                        }}
+                      >
+                        {favoris.find((id) => id.id === book.id) ? (
+                          <AntDesign name="heart" size={24} color="black" />
+                        ) : (
+                          <AntDesign name="hearto" size={24} color="black" />
+                        )}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newReadingList.length; i++) {
+                            if (newReadingList[i].id === book.id) {
+                              isPresent = true;
+                            }
+                          }
+                          if (isPresent === true) {
+                            setReadingList(
+                              readingList.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newReadingList.push({
+                              img: "../assets/coverNotAvailable.jpg",
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setReadingList(newReadingList);
+                          }
+                        }}
+                      >
+                        {readingList.find((id) => id.id === book.id) ? (
+                          <FontAwesome5 name="book" color="red" />
+                        ) : (
+                          <FontAwesome5 name="book" />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              }
             } else {
-              return (
-                <View key={book.id}>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("Book", { id: book.id })
-                      }
-                    >
-                      <Image
-                        source={{
-                          uri: book.volumeInfo.imageLinks.smallThumbnail,
+              if (book.volumeInfo.imageLinks) {
+                return (
+                  <View key={book.id}>
+                    <View>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("Book", { id: book.id })
+                        }
+                      >
+                        <Image
+                          source={{
+                            uri: book.volumeInfo.imageLinks.smallThumbnail,
+                          }}
+                          style={styles.img}
+                        />
+                        <Text>{book.volumeInfo.title}</Text>
+                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newFavoris.length; i++) {
+                            if (newFavoris[i].id === book.id) {
+                              isPresent = true;
+                            }
+                          }
+                          if (isPresent === true) {
+                            setFavoris(
+                              favoris.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newFavoris.push({
+                              img: book.volumeInfo.imageLinks.smallThumbnail,
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setFavoris(newFavoris);
+                          }
                         }}
-                        style={styles.img}
-                      />
-                      <Text>{book.volumeInfo.title}</Text>
-                      <Text>
-                        Release: {book.volumeInfo.publishedDate.substr(0, 4)}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View>
-                    <TouchableOpacity
-                      style={styles.btn}
-                      onPress={() => {
-                        let isPresent = false;
-                        for (let i = 0; i < newFavoris.length; i++) {
-                          if (newFavoris[i].id === book.id) {
-                            isPresent = true;
+                      >
+                        {favoris.find((id) => id.id === book.id) ? (
+                          <AntDesign name="heart" size={24} color="black" />
+                        ) : (
+                          <AntDesign name="hearto" size={24} color="black" />
+                        )}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newReadingList.length; i++) {
+                            if (newReadingList[i].id === book.id) {
+                              isPresent = true;
+                            }
                           }
-                        }
-                        if (isPresent === true) {
-                          setFavoris(favoris.filter((id) => id.id !== book.id));
-                        } else {
-                          newFavoris.push({
-                            img: book.volumeInfo.imageLinks.smallThumbnail,
-                            title: book.volumeInfo.title,
-                            id: book.id,
-                          });
-                          setFavoris(newFavoris);
-                        }
-                      }}
-                    >
-                      {favoris.find((id) => id.id === book.id) ? (
-                        <AntDesign name="heart" size={24} color="black" />
-                      ) : (
-                        <AntDesign name="hearto" size={24} color="black" />
-                      )}
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.btn}
-                      onPress={() => {
-                        let isPresent = false;
-                        for (let i = 0; i < newReadingList.length; i++) {
-                          if (newReadingList[i].id === book.id) {
-                            isPresent = true;
+                          if (isPresent === true) {
+                            setReadingList(
+                              readingList.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newReadingList.push({
+                              img: book.volumeInfo.imageLinks.smallThumbnail,
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setReadingList(newReadingList);
                           }
-                        }
-                        if (isPresent === true) {
-                          setReadingList(
-                            readingList.filter((id) => id.id !== book.id)
-                          );
-                        } else {
-                          newReadingList.push({
-                            img: book.volumeInfo.imageLinks.smallThumbnail,
-                            title: book.volumeInfo.title,
-                            id: book.id,
-                          });
-                          setReadingList(newReadingList);
-                        }
-                      }}
-                    >
-                      {readingList.find((id) => id.id === book.id) ? (
-                        <FontAwesome5 name="book" color="red" />
-                      ) : (
-                        <FontAwesome5 name="book" />
-                      )}
-                    </TouchableOpacity>
+                        }}
+                      >
+                        {readingList.find((id) => id.id === book.id) ? (
+                          <FontAwesome5 name="book" color="red" />
+                        ) : (
+                          <FontAwesome5 name="book" />
+                        )}
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
+                );
+              } else {
+                return (
+                  <View key={book.id}>
+                    <View>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("Book", { id: book.id })
+                        }
+                      >
+                        <Image
+                          source={require("../assets/coverNotAvailable.jpg")}
+                          style={styles.img}
+                        />
+                        <Text>{book.volumeInfo.title}</Text>
+                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newFavoris.length; i++) {
+                            if (newFavoris[i].id === book.id) {
+                              isPresent = true;
+                            }
+                          }
+                          if (isPresent === true) {
+                            setFavoris(
+                              favoris.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newFavoris.push({
+                              img: "../assets/coverNotAvailable.jpg",
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setFavoris(newFavoris);
+                          }
+                        }}
+                      >
+                        {favoris.find((id) => id.id === book.id) ? (
+                          <AntDesign name="heart" size={24} color="black" />
+                        ) : (
+                          <AntDesign name="hearto" size={24} color="black" />
+                        )}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          let isPresent = false;
+                          for (let i = 0; i < newReadingList.length; i++) {
+                            if (newReadingList[i].id === book.id) {
+                              isPresent = true;
+                            }
+                          }
+                          if (isPresent === true) {
+                            setReadingList(
+                              readingList.filter((id) => id.id !== book.id)
+                            );
+                          } else {
+                            newReadingList.push({
+                              img: "../assets/coverNotAvailable.jpg",
+                              title: book.volumeInfo.title,
+                              id: book.id,
+                            });
+                            setReadingList(newReadingList);
+                          }
+                        }}
+                      >
+                        {readingList.find((id) => id.id === book.id) ? (
+                          <FontAwesome5 name="book" color="red" />
+                        ) : (
+                          <FontAwesome5 name="book" />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              }
             }
           })}
         </View>
