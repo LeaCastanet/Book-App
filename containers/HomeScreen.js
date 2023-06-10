@@ -65,27 +65,29 @@ export default function HomeScreen({
             if (book.volumeInfo.authors) {
               if (book.volumeInfo.imageLinks) {
                 return (
-                  <View key={book.id}>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("Book", { id: book.id })
-                        }
-                      >
-                        <Image
-                          source={{
-                            uri: book.volumeInfo.imageLinks.smallThumbnail,
-                          }}
-                          style={styles.img}
-                        ></Image>
+                  <View key={book.id} style={styles.bookCard}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Book", { id: book.id })
+                      }
+                      style={styles.bookInfos}
+                    >
+                      <Image
+                        source={{
+                          uri: book.volumeInfo.imageLinks.smallThumbnail,
+                        }}
+                        style={styles.img}
+                      ></Image>
+                      <View style={styles.textContainer}>
                         <Text>{book.volumeInfo.title}</Text>
                         <Text>
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
                         <Text>Release: {book.volumeInfo.publishedDate}</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.buttonsContainer}>
                       <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
@@ -110,9 +112,9 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={24} color="black" />
+                          <AntDesign name="heart" size={30} color="black" />
                         ) : (
-                          <AntDesign name="hearto" size={24} color="black" />
+                          <AntDesign name="hearto" size={30} color="black" />
                         )}
                       </TouchableOpacity>
                       <TouchableOpacity
@@ -139,9 +141,9 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" color="red" />
+                          <FontAwesome5 name="book" size={30} color="red" />
                         ) : (
-                          <FontAwesome5 name="book" />
+                          <FontAwesome5 name="book" size={30} />
                         )}
                       </TouchableOpacity>
                     </View>
@@ -149,25 +151,27 @@ export default function HomeScreen({
                 );
               } else {
                 return (
-                  <View key={book.id}>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("Book", { id: book.id })
-                        }
-                      >
-                        <Image
-                          source={require("../assets/coverNotAvailable.jpg")}
-                          style={styles.img}
-                        />
+                  <View key={book.id} style={styles.bookCard}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Book", { id: book.id })
+                      }
+                      style={styles.bookInfos}
+                    >
+                      <Image
+                        source={require("../assets/coverNotAvailable.jpg")}
+                        style={styles.img}
+                      />
+                      <View style={styles.textContainer}>
                         <Text>{book.volumeInfo.title}</Text>
                         <Text>
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
                         <Text>Release: {book.volumeInfo.publishedDate}</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.buttonsContainer}>
                       <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
@@ -192,9 +196,9 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={24} color="black" />
+                          <AntDesign name="heart" size={30} color="black" />
                         ) : (
-                          <AntDesign name="hearto" size={24} color="black" />
+                          <AntDesign name="hearto" size={30} color="black" />
                         )}
                       </TouchableOpacity>
                       <TouchableOpacity
@@ -221,9 +225,9 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" color="red" />
+                          <FontAwesome5 name="book" size={30} color="red" />
                         ) : (
-                          <FontAwesome5 name="book" />
+                          <FontAwesome5 name="book" size={30} />
                         )}
                       </TouchableOpacity>
                     </View>
@@ -233,24 +237,26 @@ export default function HomeScreen({
             } else {
               if (book.volumeInfo.imageLinks) {
                 return (
-                  <View key={book.id}>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("Book", { id: book.id })
-                        }
-                      >
-                        <Image
-                          source={{
-                            uri: book.volumeInfo.imageLinks.smallThumbnail,
-                          }}
-                          style={styles.img}
-                        />
+                  <View key={book.id} style={styles.bookCard}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Book", { id: book.id })
+                      }
+                      style={styles.bookInfos}
+                    >
+                      <Image
+                        source={{
+                          uri: book.volumeInfo.imageLinks.smallThumbnail,
+                        }}
+                        style={styles.img}
+                      />
+                      <View style={styles.textContainer}>
                         <Text>{book.volumeInfo.title}</Text>
                         <Text>Release: {book.volumeInfo.publishedDate}</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.buttonsContainer}>
                       <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
@@ -275,9 +281,9 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={24} color="black" />
+                          <AntDesign name="heart" size={30} color="black" />
                         ) : (
-                          <AntDesign name="hearto" size={24} color="black" />
+                          <AntDesign name="hearto" size={30} color="black" />
                         )}
                       </TouchableOpacity>
                       <TouchableOpacity
@@ -304,9 +310,9 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" color="red" />
+                          <FontAwesome5 name="book" size={30} color="red" />
                         ) : (
-                          <FontAwesome5 name="book" />
+                          <FontAwesome5 name="book" size={30} />
                         )}
                       </TouchableOpacity>
                     </View>
@@ -314,22 +320,24 @@ export default function HomeScreen({
                 );
               } else {
                 return (
-                  <View key={book.id}>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("Book", { id: book.id })
-                        }
-                      >
-                        <Image
-                          source={require("../assets/coverNotAvailable.jpg")}
-                          style={styles.img}
-                        />
+                  <View key={book.id} style={styles.bookCard}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Book", { id: book.id })
+                      }
+                      style={styles.bookInfos}
+                    >
+                      <Image
+                        source={require("../assets/coverNotAvailable.jpg")}
+                        style={styles.img}
+                      />
+                      <View style={styles.textContainer}>
                         <Text>{book.volumeInfo.title}</Text>
                         <Text>Release: {book.volumeInfo.publishedDate}</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.buttonsContainer}>
                       <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
@@ -354,9 +362,9 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={24} color="black" />
+                          <AntDesign name="heart" size={30} color="black" />
                         ) : (
-                          <AntDesign name="hearto" size={24} color="black" />
+                          <AntDesign name="hearto" size={30} color="black" />
                         )}
                       </TouchableOpacity>
                       <TouchableOpacity
@@ -383,9 +391,9 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" color="red" />
+                          <FontAwesome5 name="book" size={30} color="red" />
                         ) : (
-                          <FontAwesome5 name="book" />
+                          <FontAwesome5 name="book" size={30} />
                         )}
                       </TouchableOpacity>
                     </View>
@@ -408,8 +416,20 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
   },
-  img: {
-    height: 80,
-    width: 50,
+  bookCard: {
+    backgroundColor: "red",
+    marginTop: 5,
+    marginBottom: 5,
+    flexDirection: "row",
+    padding: 5,
+    width: "100%",
   },
+  bookInfos: { backgroundColor: "blue", flexDirection: "row", flex: 8 },
+  img: {
+    height: 200,
+    flex: 1,
+  },
+  textContainer: { flex: 2 },
+  buttonsContainer: { backgroundColor: "green", flex: 1 },
+  btn: { flex: 1, alignItems: "center", justifyContent: "center" },
 });
