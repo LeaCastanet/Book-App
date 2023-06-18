@@ -49,8 +49,8 @@ export default function HomeScreen({
       style={{ marginTop: 100 }}
     />
   ) : (
-    <SafeAreaView>
-      <ScrollView>
+    <SafeAreaView style={styles.home}>
+      <ScrollView style={styles.container}>
         <View>
           <Text>Search</Text>
         </View>
@@ -79,11 +79,15 @@ export default function HomeScreen({
                         style={styles.img}
                       ></Image>
                       <View style={styles.textContainer}>
-                        <Text>{book.volumeInfo.title}</Text>
-                        <Text>
+                        <Text style={styles.bookTitle}>
+                          {book.volumeInfo.title}
+                        </Text>
+                        <Text style={styles.bookText}>
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
-                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                        <Text style={styles.bookText}>
+                          Release: {book.volumeInfo.publishedDate}
+                        </Text>
                       </View>
                     </TouchableOpacity>
 
@@ -163,11 +167,15 @@ export default function HomeScreen({
                         style={styles.img}
                       />
                       <View style={styles.textContainer}>
-                        <Text>{book.volumeInfo.title}</Text>
-                        <Text>
+                        <Text style={styles.bookTitle}>
+                          {book.volumeInfo.title}
+                        </Text>
+                        <Text style={styles.bookText}>
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
-                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                        <Text style={styles.bookText}>
+                          Release: {book.volumeInfo.publishedDate}
+                        </Text>
                       </View>
                     </TouchableOpacity>
 
@@ -251,8 +259,12 @@ export default function HomeScreen({
                         style={styles.img}
                       />
                       <View style={styles.textContainer}>
-                        <Text>{book.volumeInfo.title}</Text>
-                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                        <Text style={styles.bookTitle}>
+                          {book.volumeInfo.title}
+                        </Text>
+                        <Text style={styles.bookText}>
+                          Release: {book.volumeInfo.publishedDate}
+                        </Text>
                       </View>
                     </TouchableOpacity>
 
@@ -332,8 +344,12 @@ export default function HomeScreen({
                         style={styles.img}
                       />
                       <View style={styles.textContainer}>
-                        <Text>{book.volumeInfo.title}</Text>
-                        <Text>Release: {book.volumeInfo.publishedDate}</Text>
+                        <Text style={styles.bookTitle}>
+                          {book.volumeInfo.title}
+                        </Text>
+                        <Text style={styles.bookText}>
+                          Release: {book.volumeInfo.publishedDate}
+                        </Text>
                       </View>
                     </TouchableOpacity>
 
@@ -409,35 +425,43 @@ export default function HomeScreen({
 }
 
 const styles = StyleSheet.create({
+  //home: { backgroundColor: "white" },
+  container: { margin: 10 },
   input: {
     height: 50,
     margin: 12,
     borderWidth: 1,
     padding: 10,
     borderRadius: 15,
+    borderColor: "white",
+    backgroundColor: "white",
   },
   bookCard: {
-    backgroundColor: "red",
+    backgroundColor: "white",
+    borderRadius: 10,
     marginTop: 5,
     marginBottom: 5,
     flexDirection: "row",
-    padding: 5,
+    padding: 10,
     width: "100%",
   },
-  bookInfos: { backgroundColor: "blue", flexDirection: "row", flex: 8 },
+  bookInfos: { flexDirection: "row", flex: 8 },
   img: {
     height: 200,
     flex: 1,
+    borderRadius: 10,
   },
-  textContainer: { flex: 2 },
+  bookTitle: { textAlign: "justify", marginBottom: 10 },
+  bookText: { textAlign: "justify", marginBottom: 10 },
+  textContainer: { flex: 2, marginLeft: 10 },
   buttonsContainer: {
-    backgroundColor: "green",
+    //backgroundColor: "green",
     position: "absolute",
     flexDirection: "row",
     marginLeft: "80%",
     marginTop: 175,
     width: 100,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   btn: {},
 });
