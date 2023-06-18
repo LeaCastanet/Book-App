@@ -430,6 +430,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textContainer: { flex: 2 },
-  buttonsContainer: { backgroundColor: "green", flex: 1 },
-  btn: { flex: 1, alignItems: "center", justifyContent: "center" },
+  buttonsContainer: {
+    backgroundColor: "green",
+    position: "absolute",
+    flexDirection: "row",
+    marginLeft: "80%",
+    marginTop: 175,
+    width: 100,
+    justifyContent: "space-around",
+  },
+  btn: {},
 });
