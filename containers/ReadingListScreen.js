@@ -14,7 +14,11 @@ export default function ReadingListScreen({
 }) {
   const navigation = useNavigation();
 
-  return (
+  return readingList.length < 1 ? (
+    <SafeAreaView style={styles.readingList}>
+      <Text style={styles.textTopReadingList}>Reading List</Text>
+    </SafeAreaView>
+  ) : (
     <SafeAreaView style={styles.readingList}>
       <Text style={styles.textTopReadingList}>Reading List</Text>
       <View>

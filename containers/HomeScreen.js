@@ -16,6 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import homeImg from "../assets/homeImg.jpg";
+import coverNotAvailable from "../assets/coverNotAvailable.jpg";
 
 export default function HomeScreen({
   favoris,
@@ -99,7 +100,7 @@ export default function HomeScreen({
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
+                          Release: {book.volumeInfo.publishedDate}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -175,10 +176,7 @@ export default function HomeScreen({
                       }
                       style={styles.bookInfos}
                     >
-                      <Image
-                        source={require("../assets/coverNotAvailable.jpg")}
-                        style={styles.img}
-                      />
+                      <Image source={coverNotAvailable} style={styles.img} />
                       <View style={styles.textContainer}>
                         <Text style={styles.bookTitle}>
                           {book.volumeInfo.title}
@@ -187,7 +185,7 @@ export default function HomeScreen({
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
+                          Release: {book.volumeInfo.publishedDate}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -208,7 +206,7 @@ export default function HomeScreen({
                             );
                           } else {
                             newFavoris.push({
-                              img: "../assets/coverNotAvailable.jpg",
+                              img: coverNotAvailable,
                               title: book.volumeInfo.title,
                               id: book.id,
                             });
@@ -237,7 +235,7 @@ export default function HomeScreen({
                             );
                           } else {
                             newReadingList.push({
-                              img: "../assets/coverNotAvailable.jpg",
+                              img: coverNotAvailable,
                               title: book.volumeInfo.title,
                               id: book.id,
                             });
@@ -276,7 +274,7 @@ export default function HomeScreen({
                           {book.volumeInfo.title}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
+                          Release: {book.volumeInfo.publishedDate}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -352,16 +350,13 @@ export default function HomeScreen({
                       }
                       style={styles.bookInfos}
                     >
-                      <Image
-                        source={require("../assets/coverNotAvailable.jpg")}
-                        style={styles.img}
-                      />
+                      <Image source={coverNotAvailable} style={styles.img} />
                       <View style={styles.textContainer}>
                         <Text style={styles.bookTitle}>
                           {book.volumeInfo.title}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
+                          Release: {book.volumeInfo.publishedDate}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -382,7 +377,7 @@ export default function HomeScreen({
                             );
                           } else {
                             newFavoris.push({
-                              img: "../assets/coverNotAvailable.jpg",
+                              img: coverNotAvailable,
                               title: book.volumeInfo.title,
                               id: book.id,
                             });
@@ -411,7 +406,7 @@ export default function HomeScreen({
                             );
                           } else {
                             newReadingList.push({
-                              img: "../assets/coverNotAvailable.jpg",
+                              img: coverNotAvailable,
                               title: book.volumeInfo.title,
                               id: book.id,
                             });
@@ -442,7 +437,6 @@ const styles = StyleSheet.create({
   container: { marginLeft: 10, marginRight: 10 },
   textTopHome: {
     marginTop: 20,
-
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center",
