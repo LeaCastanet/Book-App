@@ -11,10 +11,10 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { ActivityIndicator } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import homeImg from "../assets/homeImg.jpg";
 
 export default function HomeScreen({
   favoris,
@@ -26,33 +26,24 @@ export default function HomeScreen({
 }) {
   const navigation = useNavigation();
 
-  const [search, setSearch] = useState("Search here");
+  const [search, setSearch] = useState();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=40`
-      );
-      setData(response.data.items);
-      setIsLoading(false);
-      // console.log(response.data.items);
-    };
-    fetchData();
-  }, [search]);
+  const submit = async () => {
+    const response = await axios.get(
+      `https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=40`
+    );
+    setData(response.data.items);
+    setIsLoading(false);
+    // console.log(response.data.items);
+  };
 
   return isLoading ? (
-    <ActivityIndicator
-      size="large"
-      color="#ec5a62"
-      style={{ marginTop: 100 }}
-    />
-  ) : (
     <SafeAreaView style={styles.home}>
-      <ScrollView style={styles.container}>
+      <View style={styles.inputContainer}>
         <View>
-          <Text>Search</Text>
+          <Text>Look for your next reading</Text>
         </View>
         <TextInput
           style={styles.input}
@@ -60,6 +51,26 @@ export default function HomeScreen({
           value={search}
           placeholder="Search here"
         />
+        <TouchableOpacity onPress={submit}>
+          <Text>Search</Text>
+        </TouchableOpacity>
+      </View>
+      <Image style={styles.homeImg} source={homeImg}></Image>
+    </SafeAreaView>
+  ) : (
+    <SafeAreaView style={styles.home}>
+      <ScrollView style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setSearch}
+            value={search}
+            placeholder="Search here"
+          />
+          <TouchableOpacity onPress={submit}>
+            <Text>Search</Text>
+          </TouchableOpacity>
+        </View>
         <View>
           {data.map((book) => {
             if (book.volumeInfo.authors) {
@@ -425,8 +436,9 @@ export default function HomeScreen({
 }
 
 const styles = StyleSheet.create({
-  //home: { backgroundColor: "white" },
-  container: { margin: 10 },
+  home: { backgroundColor: "#EEF9FB", height: "100%" },
+  container: { marginLeft: 10, marginRight: 10 },
+  inputContainer: { marginTop: 30 },
   input: {
     height: 50,
     margin: 12,
@@ -436,6 +448,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     backgroundColor: "white",
   },
+  homeImg: { height: "60%", width: "100%", marginTop: 50 },
   bookCard: {
     backgroundColor: "white",
     borderRadius: 10,

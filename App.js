@@ -32,7 +32,7 @@ export default function App() {
             <Tab.Navigator
               screenOptions={{
                 headerShown: false,
-                tabBarActiveTintColor: "tomato",
+                tabBarActiveTintColor: "#74D2EB",
                 tabBarInactiveTintColor: "gray",
               }}
             >
@@ -50,9 +50,9 @@ export default function App() {
                   <Stack.Navigator>
                     <Stack.Screen
                       name="Explore"
-                      //options={{
-                      // header: (props) => <CustomHeader {...props} />,
-                      // }}
+                      options={{
+                        headerShown: false,
+                      }}
                     >
                       {() => (
                         <HomeScreen
