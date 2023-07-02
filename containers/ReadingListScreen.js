@@ -1,4 +1,10 @@
-import { Text, View, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
 export default function ReadingListScreen({
@@ -9,8 +15,8 @@ export default function ReadingListScreen({
   const navigation = useNavigation();
 
   return (
-    <View>
-      <Text>Reading List</Text>
+    <SafeAreaView style={styles.readingList}>
+      <Text style={styles.textTopReadingList}>Reading List</Text>
       <View>
         {readingList.map((book) => {
           return <Text>{book.id}</Text>;
@@ -19,6 +25,16 @@ export default function ReadingListScreen({
       <TouchableOpacity onPress={() => navigation.push("Book")}>
         <Text>Go to product !</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  readingList: { backgroundColor: "#EEF9FB", height: "100%" },
+  textTopReadingList: {
+    marginTop: 20,
+    fontWeight: "bold",
+    fontSize: 20,
+    textAlign: "center",
+  },
+});

@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/core";
 
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
 import homeImg from "../assets/homeImg.jpg";
 
 export default function HomeScreen({
@@ -41,25 +42,26 @@ export default function HomeScreen({
 
   return isLoading ? (
     <SafeAreaView style={styles.home}>
-      <View style={styles.inputContainer}>
-        <View>
-          <Text>Look for your next reading</Text>
+      <View>
+        <Text style={styles.textTopHome}>Look for your next reading</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setSearch}
+            value={search}
+            placeholder="Search here"
+          />
+          <TouchableOpacity onPress={submit} style={styles.iconSearch}>
+            <Foundation name="magnifying-glass" size={30} color="black" />
+          </TouchableOpacity>
         </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setSearch}
-          value={search}
-          placeholder="Search here"
-        />
-        <TouchableOpacity onPress={submit}>
-          <Text>Search</Text>
-        </TouchableOpacity>
       </View>
       <Image style={styles.homeImg} source={homeImg}></Image>
     </SafeAreaView>
   ) : (
     <SafeAreaView style={styles.home}>
       <ScrollView style={styles.container}>
+        <Text style={styles.textTopHome}>Look for your next reading</Text>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -68,7 +70,7 @@ export default function HomeScreen({
             placeholder="Search here"
           />
           <TouchableOpacity onPress={submit}>
-            <Text>Search</Text>
+            <Foundation name="magnifying-glass" size={30} color="black" />
           </TouchableOpacity>
         </View>
         <View>
@@ -97,7 +99,7 @@ export default function HomeScreen({
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate}
+                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -127,7 +129,7 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={30} color="black" />
+                          <AntDesign name="heart" size={30} color="#74D2EB" />
                         ) : (
                           <AntDesign name="hearto" size={30} color="black" />
                         )}
@@ -156,7 +158,7 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" size={30} color="red" />
+                          <FontAwesome5 name="book" size={30} color="#74D2EB" />
                         ) : (
                           <FontAwesome5 name="book" size={30} />
                         )}
@@ -185,7 +187,7 @@ export default function HomeScreen({
                           Author(s): {book.volumeInfo.authors.join(", ")}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate}
+                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -215,7 +217,7 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={30} color="black" />
+                          <AntDesign name="heart" size={30} color="#74D2EB" />
                         ) : (
                           <AntDesign name="hearto" size={30} color="black" />
                         )}
@@ -244,7 +246,7 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" size={30} color="red" />
+                          <FontAwesome5 name="book" size={30} color="#74D2EB" />
                         ) : (
                           <FontAwesome5 name="book" size={30} />
                         )}
@@ -274,7 +276,7 @@ export default function HomeScreen({
                           {book.volumeInfo.title}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate}
+                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -304,7 +306,7 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={30} color="black" />
+                          <AntDesign name="heart" size={30} color="#74D2EB" />
                         ) : (
                           <AntDesign name="hearto" size={30} color="black" />
                         )}
@@ -333,7 +335,7 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" size={30} color="red" />
+                          <FontAwesome5 name="book" size={30} color="#74D2EB" />
                         ) : (
                           <FontAwesome5 name="book" size={30} />
                         )}
@@ -359,7 +361,7 @@ export default function HomeScreen({
                           {book.volumeInfo.title}
                         </Text>
                         <Text style={styles.bookText}>
-                          Release: {book.volumeInfo.publishedDate}
+                          Release: {book.volumeInfo.publishedDate.substr(0, 10)}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -389,7 +391,7 @@ export default function HomeScreen({
                         }}
                       >
                         {favoris.find((id) => id.id === book.id) ? (
-                          <AntDesign name="heart" size={30} color="black" />
+                          <AntDesign name="heart" size={30} color="#74D2EB" />
                         ) : (
                           <AntDesign name="hearto" size={30} color="black" />
                         )}
@@ -418,7 +420,7 @@ export default function HomeScreen({
                         }}
                       >
                         {readingList.find((id) => id.id === book.id) ? (
-                          <FontAwesome5 name="book" size={30} color="red" />
+                          <FontAwesome5 name="book" size={30} color="#74D2EB" />
                         ) : (
                           <FontAwesome5 name="book" size={30} />
                         )}
@@ -438,8 +440,16 @@ export default function HomeScreen({
 const styles = StyleSheet.create({
   home: { backgroundColor: "#EEF9FB", height: "100%" },
   container: { marginLeft: 10, marginRight: 10 },
-  inputContainer: { marginTop: 30 },
+  textTopHome: {
+    marginTop: 20,
+
+    fontWeight: "bold",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  inputContainer: { flexDirection: "row", alignItems: "center" },
   input: {
+    flex: 9,
     height: 50,
     margin: 12,
     borderWidth: 1,
@@ -448,6 +458,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     backgroundColor: "white",
   },
+  iconSearch: { flex: 0.9 },
   homeImg: { height: "60%", width: "100%", marginTop: 50 },
   bookCard: {
     backgroundColor: "white",
@@ -464,8 +475,13 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 10,
   },
-  bookTitle: { textAlign: "justify", marginBottom: 10 },
-  bookText: { textAlign: "justify", marginBottom: 10 },
+  bookTitle: {
+    textAlign: "justify",
+    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  bookText: { textAlign: "justify", marginBottom: 10, fontSize: 16 },
   textContainer: { flex: 2, marginLeft: 10 },
   buttonsContainer: {
     //backgroundColor: "green",
@@ -476,5 +492,4 @@ const styles = StyleSheet.create({
     width: 100,
     justifyContent: "space-between",
   },
-  btn: {},
 });

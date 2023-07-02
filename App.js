@@ -1,7 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -67,9 +65,9 @@ export default function App() {
                     </Stack.Screen>
                     <Stack.Screen
                       name="Book"
-                      //options={{
-                      //header: (props) => <CustomHeader {...props} />,
-                      // }}
+                      options={{
+                        headerShown: false,
+                      }}
                     >
                       {() => <BookScreen />}
                     </Stack.Screen>
@@ -91,9 +89,9 @@ export default function App() {
                   <Stack.Navigator>
                     <Stack.Screen
                       name="Favorite"
-                      //options={{
-                      // header: (props) => <CustomHeader {...props} />,
-                      // }}
+                      options={{
+                        headerShown: false,
+                      }}
                     >
                       {() => (
                         <FavoriteScreen
@@ -105,9 +103,9 @@ export default function App() {
                     </Stack.Screen>
                     <Stack.Screen
                       name="Book"
-                      //options={{
-                      //header: (props) => <CustomHeader {...props} />,
-                      // }}
+                      options={{
+                        headerShown: false,
+                      }}
                     >
                       {() => <BookScreen />}
                     </Stack.Screen>
@@ -129,9 +127,9 @@ export default function App() {
                   <Stack.Navigator>
                     <Stack.Screen
                       name="Reading List"
-                      //options={{
-                      // header: (props) => <CustomHeader {...props} />,
-                      // }}
+                      options={{
+                        headerShown: false,
+                      }}
                     >
                       {() => (
                         <ReadingListScreen
@@ -143,9 +141,9 @@ export default function App() {
                     </Stack.Screen>
                     <Stack.Screen
                       name="Book"
-                      //options={{
-                      //header: (props) => <CustomHeader {...props} />,
-                      // }}
+                      options={{
+                        headerShown: false,
+                      }}
                     >
                       {() => <BookScreen />}
                     </Stack.Screen>
@@ -159,12 +157,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
