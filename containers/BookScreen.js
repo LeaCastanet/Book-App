@@ -1,7 +1,16 @@
-import { Text, View, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Image,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import coverNotAvailable from "../assets/coverNotAvailable.jpg";
 
 export default function BookScreen() {
   const route = useRoute();
@@ -23,14 +32,43 @@ export default function BookScreen() {
   }, []);
 
   return isLoading ? (
-    <ActivityIndicator
-      size="large"
-      color="#ec5a62"
-      style={{ marginTop: 100 }}
-    />
+    <SafeAreaView style={styles.bookPage}>
+      <ActivityIndicator
+        size="large"
+        color="#74D2EB"
+        style={{ marginTop: 100 }}
+      />
+    </SafeAreaView>
   ) : (
-    <View>
-      <Text>{book.title}</Text>
-    </View>
+    <SafeAreaView style={styles.bookPage}>
+      <ScrollView>
+        <View style={styles.imgContainer}>
+          <Image
+            source={
+              book.imageLinks
+                ? { uri: book.imageLinks.smallThumbnail }
+                : coverNotAvailable
+            }
+            style={styles.img}
+          ></Image>
+          <Text>{book.title}</Text>
+        </View>
+
+        <View style={styles.bookInfoContainer}>
+          <Text>{book.authors}</Text>
+          <Text>{book.publisher}</Text>
+          <Text>{book.publishedDate}</Text>
+          <Text>{book.description}</Text>
+          <Text>{book.averageRating}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  bookPage: { backgroundColor: "#EEF9FB", height: "100%" },
+  imgContainer: { alignItems: "center", marginTop: 20 },
+  img: { height: 300, width: 190, borderRadius: 10 },
+  bookInfoContainer: { marginTop: 20 },
+});
