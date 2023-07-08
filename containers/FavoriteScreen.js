@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import coverNotAvailable from "../assets/coverNotAvailable.jpg";
@@ -21,38 +22,39 @@ export default function FavoriteScreen({ favoris, setFavoris, newFavoris }) {
     </SafeAreaView>
   ) : (
     <SafeAreaView style={styles.favorite}>
-      <Text style={styles.textTopFavorite}>Favorite</Text>
-      <View>
-        {favoris.map((fav) => {
-          if (fav.img === coverNotAvailable) {
-            return (
-              <View style={styles.bookCardContainer}>
-                <View>
+      <ScrollView>
+        <Text style={styles.textTopFavorite}>Favorite</Text>
+        <View style={styles.bookCardContainer}>
+          {favoris.map((fav) => {
+            if (fav.img === coverNotAvailable) {
+              return (
+                <TouchableOpacity
+                  style={styles.bookContainer}
+                  onPress={() => navigation.push("Book", { id: fav.id })}
+                >
                   <Image style={styles.img} source={coverNotAvailable}></Image>
-                  <Text>{fav.title}</Text>
-                </View>
-              </View>
-            );
-          } else {
-            return (
-              <View style={styles.bookCardContainer}>
-                <View>
+                  <Text style={styles.title}>{fav.title}</Text>
+                </TouchableOpacity>
+              );
+            } else {
+              return (
+                <TouchableOpacity
+                  style={styles.bookContainer}
+                  onPress={() => navigation.push("Book", { id: fav.id })}
+                >
                   <Image
                     style={styles.img}
                     source={{
                       uri: fav.img,
                     }}
                   ></Image>
-                  <Text>{fav.title}</Text>
-                </View>
-              </View>
-            );
-          }
-        })}
-      </View>
-      <TouchableOpacity onPress={() => navigation.push("Book")}>
-        <Text>Go to product !</Text>
-      </TouchableOpacity>
+                  <Text style={styles.title}>{fav.title}</Text>
+                </TouchableOpacity>
+              );
+            }
+          })}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -66,6 +68,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
-  bookCardContainer: { flexDirection: "row" },
-  img: { height: 100, width: 50 },
+  bookCardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  bookContainer: {
+    width: "47%",
+    margin: 5,
+    alignContent: "space-between",
+    marginBottom: 15,
+  },
+  img: { height: 320, width: "100%", borderRadius: 10 },
+  title: { textAlign: "center", fontWeight: "bold", fontSize: 17 },
 });
