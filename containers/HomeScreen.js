@@ -470,12 +470,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   bookTitle: {
-    textAlign: "justify",
     marginBottom: 20,
     fontSize: 20,
     fontWeight: "bold",
   },
-  bookText: { textAlign: "justify", marginBottom: 10, fontSize: 16 },
+  bookText: { marginBottom: 10, fontSize: 16 },
   textContainer: { flex: 2, marginLeft: 10 },
   buttonsContainer: {
     //backgroundColor: "green",
