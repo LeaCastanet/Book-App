@@ -11,6 +11,8 @@ import { useRoute } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import coverNotAvailable from "../assets/coverNotAvailable.jpg";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function BookScreen() {
   const route = useRoute();
@@ -52,14 +54,34 @@ export default function BookScreen() {
             style={styles.img}
           ></Image>
           <Text>{book.title}</Text>
+          <View>
+            {/* A faire reagir en fonction de si dans fav ou reading list après avoir fait le back */}
+            <AntDesign name="hearto" size={30} color="black" />
+            <FontAwesome5 name="book" size={30} />
+          </View>
         </View>
 
         <View style={styles.bookInfoContainer}>
-          <Text>{book.authors}</Text>
-          <Text>{book.publisher}</Text>
-          <Text>{book.publishedDate}</Text>
-          <Text>{book.description}</Text>
-          <Text>{book.averageRating}</Text>
+          <View>
+            <Text>Author :</Text>
+            <Text>{book.authors}</Text>
+          </View>
+          <View>
+            <Text>publisher :</Text>
+            <Text>{book.publisher}</Text>
+          </View>
+          <View>
+            <Text>Release :</Text>
+            <Text>{book.publishedDate}</Text>
+          </View>
+          <View>
+            <Text></Text>
+            <Text>{book.description}</Text>
+          </View>
+          <View>
+            <Text>Reader reviews :</Text>
+            <Text>{book.averageRating}</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

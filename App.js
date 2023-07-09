@@ -1,9 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -12,6 +13,8 @@ import HomeScreen from "./containers/HomeScreen";
 import FavoriteScreen from "./containers/FavoriteScreen";
 import BookScreen from "./containers/BookScreen";
 import ReadingListScreen from "./containers/ReadingListScreen";
+// import SignIn from "./containers/SignIn";
+// import SignUp from "./containers/SignUp";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,9 +25,47 @@ export default function App() {
 
   const [readingList, setReadingList] = useState([]);
   const newReadingList = [...readingList];
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
+  const setToken = async (token) => {
+    if (token) {
+      await AsyncStorage.setItem("userToken", token);
+    } else {
+      await AsyncStorage.removeItem("userToken");
+    }
+    setUserToken(token);
+  };
+
+  useEffect(() => {
+    const checkIfATokenExist = async () => {
+      const userToken = await AsyncStorage.getItem("userToken");
+
+      setUserToken(userToken);
+
+      setIsLoading(false);
+    };
+
+    checkIfATokenExist();
+  }, []);
+
+  if (isLoading === true) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        {/* {userToken === null ? (
+          <>
+            <Stack.Screen name="SignUp">
+              {() => <SignUp setToken={setToken} />}
+            </Stack.Screen>
+            <Stack.Screen name="SignIn">
+              {() => <SignIn setToken={setToken} />}
+            </Stack.Screen>
+          </>
+        ) : () */}
         <Stack.Screen name="Tab" options={{ headerShown: false }}>
           {() => (
             <Tab.Navigator
